@@ -11,12 +11,13 @@ const success = document.querySelector(".success");
 const fail = document.querySelector(".fail");
 const replay = document.querySelector(".replay");
 const replayModal = document.querySelector(".replayModal");
-const replayStart = document.querySelector(".replayStart");
+const replayButton = document.querySelector(".replayButton");
 const floorSize = floor.getBoundingClientRect();
 
 let carrotCount = 9;
 const bugCount = 9;
 let setTime = undefined;
+let time = 10;
 
 function gameOut() {
     modal.style.visibility = "visible";
@@ -32,10 +33,8 @@ function gameSuccess() {
 
 floor.addEventListener("click", (event) => {
     if (event.target.className === "carrot") {
-        // event.target.style.visibility = "hidden";
         event.target.remove();
         carrotCount--;
-        console.log(carrotCount);
         counter.innerText = carrotCount;
     }
 
@@ -58,9 +57,7 @@ function firstTimer(time) {
 }
 
 function startTimer() {
-    let time = 10;
     firstTimer(time);
-
     setTime = setInterval(() => {
         time--;
         firstTimer(time);
@@ -92,8 +89,9 @@ stopButton.addEventListener("click", () => {
     pauseTimer();
 });
 
-replayStart.addEventListener("click", () => {
+replayButton.addEventListener("click", () => {
     /*타이머 재시작 */
+    startTimer();
     replayModal.style.visibility = "hidden";
     stopButton.classList.toggle("off");
 });
