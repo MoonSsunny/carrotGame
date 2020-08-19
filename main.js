@@ -73,6 +73,7 @@ function startTimer() {
 
 function pauseTimer() {
     clearInterval(setTime);
+    setTime = null;
 }
 
 playButton.addEventListener("click", () => {
@@ -92,7 +93,9 @@ stopButton.addEventListener("click", () => {
 });
 
 replayStart.addEventListener("click", () => {
-    startTimer();
+    /*타이머 재시작 */
+    replayModal.style.visibility = "hidden";
+    stopButton.classList.toggle("off");
 });
 
 /* item 생성함수 */
