@@ -18,22 +18,27 @@
             <header class="header">
                 <button class="playButton">▶</button>
                 <button class="stopButton off">■</button>
-                <div class="timer">00:00</div>
+                <div class="timer"></div>
                 <button class="counter">0</button>
             </header>
-            <!-- <div class="modal sucessModal">
-                <p class="message">
+            <div class="modal">
+                <p class="message success">
                     You are won 🎉
                 </p>
-                <button class="replay"><i class="fas fa-undo-alt"></i></button>
-            </div> -->
-            <!-- <div class="modal failModal">
-                <p class="message">
+                <p class="message fail">
                     You lost 😞
                 </p>
                 <button class="replay"><i class="fas fa-undo-alt"></i></button>
-            </div> -->
-            <!-- <div class="background"></div> -->
+            </div>
+            <div class="modal replayModal">
+                <p class="message">
+                    Replay?
+                </p>
+                <button class="replayStart">
+                    <i class="fas fa-undo-alt"></i>
+                </button>
+            </div>
+
             <div class="itemFloor">
                 <div class="floor"></div>
                 <img

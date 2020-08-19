@@ -6,26 +6,93 @@ const counter = document.querySelector(".counter");
 const timer = document.querySelector(".timer");
 const mainHeader = document.querySelector(".header");
 const carrot = document.querySelector(".carrot");
+const modal = document.querySelector(".modal");
+const success = document.querySelector(".success");
+const fail = document.querySelector(".fail");
+const replay = document.querySelector(".replay");
+const replayModal = document.querySelector(".replayModal");
+const replayStart = document.querySelector(".replayStart");
 const floorSize = floor.getBoundingClientRect();
 
 let carrotCount = 9;
 const bugCount = 9;
+let setTime = undefined;
+
+function gameOut() {
+    modal.style.visibility = "visible";
+    fail.style.display = "block";
+    mainHeader.style.display = "none";
+}
+
+function gameSuccess() {
+    modal.style.visibility = "visible";
+    success.style.display = "block";
+    mainHeader.style.display = "none";
+}
+
+floor.addEventListener("click", (event) => {
+    if (event.target.className === "carrot") {
+        // event.target.style.visibility = "hidden";
+        event.target.remove();
+        carrotCount--;
+        console.log(carrotCount);
+        counter.innerText = carrotCount;
+    }
+
+    if (event.target.className === "bug") {
+        gameOut();
+    }
+
+    if (carrotCount === 0) {
+        gameSuccess();
+    }
+});
+
+replay.addEventListener("click", () => {
+    history.go(0);
+});
+
+function firstTimer(time) {
+    const second = time % 60;
+    timer.innerText = second < 10 ? `00:0${second}` : `00:${second}`;
+}
+
+function startTimer() {
+    let time = 10;
+    firstTimer(time);
+
+    setTime = setInterval(() => {
+        time--;
+        firstTimer(time);
+        if (time < 0) {
+            clearInterval(setTime);
+            gameOut();
+        }
+    }, 1000);
+}
+
+function pauseTimer() {
+    clearInterval(setTime);
+}
 
 playButton.addEventListener("click", () => {
+    startTimer();
     addItem("carrot", carrotCount, "carrot/img/carrot.png");
     addItem("bug", bugCount, "carrot/img/bug.png");
     timer.style.visibility = "visible";
     counter.style.visibility = "visible";
-    playButton.classList.toggle("off");
+    playButton.classList.toggle("offButton");
     stopButton.classList.toggle("off");
 });
 
 stopButton.addEventListener("click", () => {
-    playButton.classList.toggle("off");
     stopButton.classList.toggle("off");
-    timer.style.visibility = "hidden";
-    counter.style.visibility = "hidden";
-    floor.innerHTML = "";
+    replayModal.style.visibility = "visible";
+    pauseTimer();
+});
+
+replayStart.addEventListener("click", () => {
+    startTimer();
 });
 
 /* item 생성함수 */
@@ -53,15 +120,3 @@ function addItem(name, count, imgSrc) {
 function randomNumber(min, max) {
     return Math.random() * (max - min) + min;
 }
-
-floor.addEventListener("click", (event) => {
-    if (event.target.className === "carrot") {
-        event.target.style.visibility = "hidden";
-        carrotCount--;
-    }
-
-    if (event.target.className === "bug") {
-        console.log("hello");
-        alert("실패");
-    }
-});
