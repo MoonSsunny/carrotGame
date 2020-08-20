@@ -20,12 +20,18 @@ let setTime = undefined;
 let time = 10;
 
 function gameOut() {
+    if (success.style.display === "block") {
+        return;
+    }
     modal.style.visibility = "visible";
     fail.style.display = "block";
     mainHeader.style.display = "none";
 }
 
 function gameSuccess() {
+    if (fail.style.display === "block") {
+        return;
+    }
     modal.style.visibility = "visible";
     success.style.display = "block";
     mainHeader.style.display = "none";
