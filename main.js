@@ -17,9 +17,11 @@ const floorSize = floor.getBoundingClientRect();
 let carrotCount = 9;
 const bugCount = 9;
 let setTime = undefined;
-let time = 10;
+let time = 5;
+let started = false;
 
 function gameOut() {
+    started = false;
     if (success.style.display === "block") {
         return;
     }
@@ -29,6 +31,7 @@ function gameOut() {
 }
 
 function gameSuccess() {
+    started = false;
     if (fail.style.display === "block") {
         return;
     }
@@ -37,7 +40,10 @@ function gameSuccess() {
     mainHeader.style.display = "none";
 }
 
-floor.addEventListener("click", (event) => {
+floor.addEventListener("click", () => {
+    if (!started) {
+        return;
+    }
     if (event.target.className === "carrot") {
         event.target.remove();
         carrotCount--;
@@ -80,6 +86,7 @@ function pauseTimer() {
 }
 
 playButton.addEventListener("click", () => {
+    started = true;
     startTimer();
     addItem("carrot", carrotCount, "carrot/img/carrot.png");
     addItem("bug", bugCount, "carrot/img/bug.png");
@@ -90,6 +97,7 @@ playButton.addEventListener("click", () => {
 });
 
 stopButton.addEventListener("click", () => {
+    started = false;
     stopButton.classList.toggle("off");
     replayModal.style.visibility = "visible";
     pauseTimer();
@@ -97,6 +105,7 @@ stopButton.addEventListener("click", () => {
 
 replayButton.addEventListener("click", () => {
     /*타이머 재시작 */
+    started = true;
     startTimer();
     replayModal.style.visibility = "hidden";
     stopButton.classList.toggle("off");
