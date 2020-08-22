@@ -22,6 +22,8 @@ let started = false;
 
 function gameOut() {
     started = false;
+    let audio = new Audio("alert.wav");
+    audio.play();
     if (success.style.display === "block") {
         return;
     }
@@ -32,6 +34,8 @@ function gameOut() {
 
 function gameSuccess() {
     started = false;
+    let audio = new Audio("game_win.mp3");
+    audio.play();
     if (fail.style.display === "block") {
         return;
     }
@@ -40,17 +44,23 @@ function gameSuccess() {
     mainHeader.style.display = "none";
 }
 
+function gameStart() {}
+
 floor.addEventListener("click", () => {
     if (!started) {
         return;
     }
     if (event.target.className === "carrot") {
+        let audio = new Audio("carrot_pull.mp3");
+        audio.play();
         event.target.remove();
         carrotCount--;
         counter.innerText = carrotCount;
     }
 
     if (event.target.className === "bug") {
+        let audio = new Audio("bug_pull.mp3");
+        audio.play();
         gameOut();
     }
 
@@ -87,7 +97,10 @@ function pauseTimer() {
 
 playButton.addEventListener("click", () => {
     started = true;
+    let audio = new Audio("bg.mp3");
+    audio.play();
     startTimer();
+
     addItem("carrot", carrotCount, "carrot/img/carrot.png");
     addItem("bug", bugCount, "carrot/img/bug.png");
     timer.style.visibility = "visible";
